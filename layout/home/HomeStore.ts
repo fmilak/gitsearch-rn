@@ -5,6 +5,8 @@ import RestStore from '../../service/RestStore';
 class HomeStore {
     restStore!: RestStore;
 
+    navigation!: any;
+
     getRepos!: Function;
 
     @observable username = '';
@@ -38,14 +40,14 @@ class HomeStore {
     ];
 
     @action
-    onUsernameChange = (e: any): void => {
-        this.username = e.target.value;
+    onUsernameChange = (value: string): void => {
+        this.username = value;
     };
 
     @action
-    filterRepos = (e: any): void => {
+    filterRepos = (value: string): void => {
         this.shownData = this.repositories.filter((repo: GitRepoResponse) => {
-            if (repo.name.includes(e.target.value)) {
+            if (repo.name.includes(value)) {
                 return repo;
             }
         });
@@ -76,6 +78,18 @@ class HomeStore {
             }
         });
         this.shownData = [...this.repositories];
+        console.log(this.repositories);
+    };
+
+    navigateToRepo = (repoName: string): void => {
+        const selectedRepo: GitRepoResponse = this.repositories.find((repo: GitRepoResponse) => {
+            if (repo.name === repoName) {
+                return repo;
+            }
+        });
+        this.navigation.navigate('RepoView', {
+            selectedRepo: JSON.stringify(selectedRepo),
+        });
     };
 }
 

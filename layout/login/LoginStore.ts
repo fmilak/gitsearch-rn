@@ -5,27 +5,30 @@ import RestStore from '../../service/RestStore';
 class LoginStore {
     restStore!: RestStore;
 
+    navigation!: any;
+
     githubToken = '';
 
-    //userRights = 'LoginNavigator'; todo -> uncomment when login is implemented
-    userRights = 'AppNavigator';
+    @observable userRights = 'LoginNavigator';
 
     @observable username = '';
 
     @observable password = '';
 
     @action
-    onUsernameChange = (e: any): void => {
-        this.username = e.target.value;
+    onUsernameChange = (value: string): void => {
+        this.username = value;
     };
 
     @action
-    onPasswordChange = (e: any): void => {
-        this.password = e.target.value;
+    onPasswordChange = (value: string): void => {
+        this.password = value;
     };
 
     @action
     tryLogin = async (): Promise<void> => {
+        this.userRights = 'AppNavigator';
+        /**
         const restInit: RestOptions = new RestOptions();
         restInit.url = '/token';
         restInit.headers = {
@@ -37,7 +40,7 @@ class LoginStore {
             username: this.username,
             password: this.password,
         });
-        this.restStore.fetch(restInit.url, restInit, this.handleLoginResponse);
+        this.restStore.fetch(restInit.url, restInit, this.handleLoginResponse);*/
     };
 
     @action
@@ -45,7 +48,6 @@ class LoginStore {
         this.githubToken = responseJson.token;
         this.userRights = 'AppNavigator';
         console.log(this.githubToken);
-        // todo -> navigate to home
     };
 }
 

@@ -5,31 +5,35 @@ import {useEffect} from 'react';
 import {Text} from 'react-native-svg';
 import {RootContext} from '../../App';
 
-const LoginView = observer(() => {
-    const {loginStore, restStore} = React.useContext(RootContext);
+interface LoginViewProps {
+    navigation: any;
+}
 
-    useEffect(() => {
-        loginStore.restStore = restStore;
-    }, [loginStore, restStore]);
+const LoginView: React.FC<LoginViewProps> = observer(({navigation}) => {
+    const {loginStore, restStore} = React.useContext(RootContext);
+    loginStore.restStore = restStore;
+    loginStore.navigation = navigation;
+
+    useEffect(() => {}, [loginStore, restStore]);
 
     return (
         <Center flex={1}>
             <Box>
-                <Heading size="2xl" mb={3}>
+                <Heading size="2xl" mb={3} color="#486E95">
                     GitHub Search
                 </Heading>
             </Box>
             <Box>
-                <Heading size="lg" mb={2}>
+                <Heading size="lg" mb={2} color="#486E95">
                     Login
                 </Heading>
             </Box>
             <Stack w="80%">
                 <Box>
-                    <Input size="lg" placeholder="Username" mb={2} onChange={loginStore.onUsernameChange} />
+                    <Input size="lg" placeholder="Username" mb={2} onChangeText={loginStore.onUsernameChange} />
                 </Box>
                 <Box>
-                    <Input type="password" size="lg" placeholder="Password" mb={2} onChange={loginStore.onPasswordChange} />
+                    <Input type="password" size="lg" placeholder="Password" mb={2} onChangeText={loginStore.onPasswordChange} />
                 </Box>
             </Stack>
             <Box w="60%">

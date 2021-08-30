@@ -1,9 +1,11 @@
+import {ApolloProvider} from '@apollo/client';
 import {NavigationContainer} from '@react-navigation/native';
 import {configure} from 'mobx';
 import {NativeBaseProvider} from 'native-base';
 import React, {createContext} from 'react';
 import RootNavigator from './AppNavigator';
 import RootStore from './RootStore';
+import {gqlClient} from './service/GqlService';
 
 /**
  * Enforces MobX action use
@@ -19,11 +21,13 @@ export const RootContext = createContext(rootStore);
 
 const App = () => {
     return (
-        <NativeBaseProvider>
-            <NavigationContainer>
-                <RootNavigator loginStore={loginStore} />
-            </NavigationContainer>
-        </NativeBaseProvider>
+        <ApolloProvider client={gqlClient}>
+            <NativeBaseProvider>
+                <NavigationContainer>
+                    <RootNavigator loginStore={loginStore} />
+                </NavigationContainer>
+            </NativeBaseProvider>
+        </ApolloProvider>
     );
 };
 

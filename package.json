@@ -13,6 +13,7 @@
     "@apollo/client": "^3.4.10",
     "@react-navigation/native": "^5.0.9",
     "@react-navigation/stack": "^5.1.1",
+    "graphql": "^15.5.1",
     "js-base64": "^3.6.1",
     "mobx": "^5.13.0",
     "mobx-react": "^6.1.3",
