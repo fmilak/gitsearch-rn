@@ -7,7 +7,7 @@ class LoginStore {
 
     navigation!: any;
 
-    githubToken = '';
+    setGithubToken: any;
 
     @observable userRights = 'LoginNavigator';
 
@@ -28,7 +28,6 @@ class LoginStore {
     @action
     tryLogin = async (): Promise<void> => {
         this.userRights = 'AppNavigator';
-        /**
         const restInit: RestOptions = new RestOptions();
         restInit.url = '/token';
         restInit.headers = {
@@ -40,14 +39,13 @@ class LoginStore {
             username: this.username,
             password: this.password,
         });
-        this.restStore.fetch(restInit.url, restInit, this.handleLoginResponse);*/
+        this.restStore.fetch(restInit.url, restInit, this.handleLoginResponse);
     };
 
     @action
     handleLoginResponse = (responseJson: any): void => {
-        this.githubToken = responseJson.token;
+        this.setGithubToken(responseJson.token);
         this.userRights = 'AppNavigator';
-        console.log(this.githubToken);
     };
 }
 
